@@ -23,6 +23,33 @@ Tired of your Downloads folder looking like a digital graveyard of forgotten ass
 
 Every step requires your input—there are no silent deletions or automatic actions.
 
+## Setup
+
+To get started with **HomeworkHeap**, follow these steps:
+
+1. **Install dependencies**: Navigate to the `source_code` directory and install the required packages:
+   ```bash
+   cd source_code
+   pip install -r requirements.txt
+   ```
+
+2. **Configure your API key**: Create a `.env` file in the `source_code` directory (you can copy `example.env` as a template):
+   ```bash
+   cp example.env .env
+   ```
+   Then edit `.env` and add your OpenAI API key:
+   ```
+   OPENAI_API_KEY=your_openai_api_key_here
+   ```
+   You can get your API key from [OpenAI's platform](https://platform.openai.com/api-keys).
+
+3. **Run the tool**: Execute the agent script:
+   ```bash
+   python agent.py
+   ```
+
+That's it! The tool will scan your `~/Downloads` folder and guide you through the cleanup process.
+
 ## Safety Features
 
 **HomeworkHeap** includes multiple layers of protection to ensure your files are never accidentally deleted. Here's how we keep your data safe:
