@@ -1,7 +1,15 @@
 import json
 import shutil
+import warnings
 from pathlib import Path
 from dotenv import load_dotenv
+
+warnings.filterwarnings(
+    "ignore",
+    message=".*Pydantic V1 functionality isn't compatible with Python 3.14.*",
+    category=UserWarning
+)
+
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
@@ -41,7 +49,7 @@ def list_pdf_files(downloads_dir: Path) -> list[str]:
 
 class FilenameClassification(BaseModel):
     """Structured output for filename classification."""
-    school_related_files: set[str] = Field(description="Set of unique filenames that are school-related")
+    school_related_files: list[str] = Field(description="List of unique filenames that are school-related")
 
 
 def classify_filenames(filenames: list[str]) -> list[str]:
@@ -49,7 +57,7 @@ def classify_filenames(filenames: list[str]) -> list[str]:
     if not filenames:
         return []
     
-    model = ChatOpenAI(model="gpt-4o-mini", temperature=0.6)
+    model = ChatOpenAI(model="gpt-4o-mini", temperature=0.5)
     
     # Use structured output for reliable parsing
     structured_model = model.with_structured_output(FilenameClassification)
@@ -68,7 +76,7 @@ CRITICAL REQUIREMENTS:
 
     try:
         result = structured_model.invoke(prompt)
-        valid_filenames = [f for f in result.school_related_files if f in filenames]
+        valid_filenames = list(dict.fromkeys([f for f in result.school_related_files if f in filenames]))
         invalid_count = len(result.school_related_files) - len(valid_filenames)
         if invalid_count > 0:
             print(f"Warning: LLM returned {invalid_count} invalid filename(s) that weren't in the original list")
@@ -213,7 +221,7 @@ def main():
         print("No school-related files found. Nothing to move.")
         return
     
-    print(f"Identified {len(school_files)} school-related file(s): {', '.join(school_files)}\n")
+    print(f"Identified {len(school_files)} school-related file(s)\n")
     
     # Step 3: Allow user to edit the list
     school_files = edit_file_list(school_files)
