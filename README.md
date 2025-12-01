@@ -4,7 +4,7 @@ Tired of your Downloads folder looking like a digital graveyard of forgotten ass
 
 **HomeworkHeap** is here to save you from your cluttered Downloads folder. Using the power of AI (because apparently we need machine learning to figure out that "Essay_Draft_v3_FINAL_v2_ACTUALLY_FINAL.pdf" is school-related), this tool automatically identifies all your academic PDFs and helps you delete them forever—because sometimes the best closure is a `rm -rf` command. 🎓🗑️
 
-![A video of me using the tool to delete some files from my Downloads folder](HomeworkHeapDemo.gif)
+![A video of me using the tool to delete some files from my Downloads folder](HW-Heap-Demo.gif)
 
 ## How It Works
 
